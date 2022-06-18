@@ -10,6 +10,10 @@ class DetailWeaponPage extends StatefulWidget {
 class _DetailWeaponPageState extends State<DetailWeaponPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Detail Weapon"),
+      ),
+    );
   }
 }

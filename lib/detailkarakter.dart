@@ -10,6 +10,10 @@ class DetailKarakterPage extends StatefulWidget {
 class _DetailKarakterPageState extends State<DetailKarakterPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Detail Karakter"),
+      ),
+    );
   }
 }
