@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DetailWeaponPage extends StatefulWidget {
-  const DetailWeaponPage({Key? key, required weapon}) : super(key: key);
+  final String weapon;
+  const DetailWeaponPage({Key? key, required this.weapon}) : super(key: key);
 
   @override
   State<DetailWeaponPage> createState() => _DetailWeaponPageState();
@@ -12,7 +13,7 @@ class _DetailWeaponPageState extends State<DetailWeaponPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detail Weapon"),
+        title: Text("Detail " " ${widget.weapon}"),
       ),
     );
   }
