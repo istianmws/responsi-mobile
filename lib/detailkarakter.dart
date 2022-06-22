@@ -11,7 +11,7 @@ class DetailKarakterPage extends StatefulWidget {
 }
 
 class _DetailKarakterPageState extends State<DetailKarakterPage> {
-  List _get = [];
+  Map _get = {};
   @override
   void initState() {
     // TODO: implement initState
@@ -29,8 +29,9 @@ class _DetailKarakterPageState extends State<DetailKarakterPage> {
       if (response.statusCode == 200) {
         //print(response.body);
         final data = jsonDecode(response.body);
+        debugPrint(response.body);
         setState(() {
-
+          _get = data;
         });
       }
     } catch (e) {
@@ -40,7 +41,7 @@ class _DetailKarakterPageState extends State<DetailKarakterPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      //backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text("Detail" " ${widget.karakter}"),
       ),
@@ -57,11 +58,11 @@ class _DetailKarakterPageState extends State<DetailKarakterPage> {
                 children: [
                   SizedBox(
                     height: 30,
-                    child: Image.network("https://api.genshin.dev/nations/${widget.karakter}/icon"),
+                    child: Image.network("https://api.genshin.dev/nations/${_get['nation'].toLowerCase()}/icon"),
                   ),
                   SizedBox(
                     child: Image.network(
-                      "https://api.genshin.dev/elements/${widget.karakter}/icon",
+                      "https://api.genshin.dev/elements/${_get['vision'].toLowerCase()}/icon",
                       height: 30,
                     ),
                   ),
