@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+extension StringCasingExtension on String {
+  String toCapitalized() => length > 0 ?'${this[0].toUpperCase()}${substring(1).toLowerCase()}':'';
+  String toTitleCase() => replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalized()).join(' ');
+}
+
 class DetailKarakterPage extends StatefulWidget {
   final String karakter;
   const DetailKarakterPage({Key? key, required this.karakter}) : super(key: key);
@@ -40,10 +45,11 @@ class _DetailKarakterPageState extends State<DetailKarakterPage> {
   }
 
   Widget build(BuildContext context) {
+
     return Scaffold(
-      //backgroundColor: Colors.black,
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text("Detail" " ${widget.karakter}"),
+        title: Text("Detail" " ${widget.karakter.toCapitalized()}"),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(5),
@@ -53,37 +59,83 @@ class _DetailKarakterPageState extends State<DetailKarakterPage> {
               child: Image.network("https://api.genshin.dev/characters/${widget.karakter}/gacha-splash"),
             ),
             Container(
+              padding: EdgeInsets.all(10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 30,
+                    height: 50,
                     child: Image.network("https://api.genshin.dev/nations/${_get['nation'].toLowerCase()}/icon"),
                   ),
                   SizedBox(
                     child: Image.network(
                       "https://api.genshin.dev/elements/${_get['vision'].toLowerCase()}/icon",
-                      height: 30,
+                      height: 50,
                     ),
                   ),
                   Text(
-                    widget.karakter.toUpperCase(),
+                    widget.karakter.toCapitalized(),
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 25,
+                      fontSize: 30,
                     ),
                   ),
                 ],
               ),
             ),
             Container(
+              padding: EdgeInsets.all(3),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
+                  for(var i=0; i<_get['rarity']; i++)
+                  //const IconStar(),
+                    const Icon(Icons.star, color: Colors.white,),
+                ],
+              ),
+            ),
+            Center(
+              child: Text(
+                '${_get['affiliation']}',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                )
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(7),
+              child: Center(
+                child: Text(
+                  '${_get['description']}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                    )
+                ),
+              ),
+            ),
+            Container(
+              child: Row(
+                children: [
+                  SizedBox(
+                    height: 150,
+                    width: 150,
+                    child: Image.network(
+                      'https://api.genshin.dev/characters/${widget.karakter}/talent-na'
+                    ),
+                  ),
+                  SizedBox(
+                    height: 150,
+                    width: 300,
+                    child: Text(
+                      '${_get['skillTalents']['description']}'
+                    ),
+                  ),
                 ],
               ),
             )
+
           ],
         ),
       ),
