@@ -12,7 +12,6 @@ class ListKarakterPage extends StatefulWidget {
 }
 
 class _ListKarakterPageState extends State<ListKarakterPage> {
-  @override
   List _get = [];
 
   @override
@@ -25,7 +24,7 @@ class _ListKarakterPageState extends State<ListKarakterPage> {
   Future _getData() async {
     try {
       final response = await http.get(Uri.parse(
-          "https://api.genshin.dev/characters"));
+          "https://api.genshin.dev/characters/"));
       // return jsonDecode(response.body);
 
       // untuk cek data
@@ -49,36 +48,45 @@ class _ListKarakterPageState extends State<ListKarakterPage> {
         title: Text('List Karakter'),
       ),
       body:ListView.builder(
+        padding: EdgeInsets.all(10),
           itemCount: _get.length,
           itemBuilder:(context, index){
-            return ListTile(
-              leading: Container(
-                color: Colors.grey[200],
-                height: 100,
-                width: 100,
-                child: Image.asset(
-                  'logo.png',
-                  width: 100,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              title: Text(
-                '${_get[index]}',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
 
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (c) => DetailKarakterPage(
-                      karakter: _get[index],
+            return Card(
+              margin: EdgeInsets.only(top: 10),
+              child: ListTile(
+                leading: Container(
+                  //color: Colors.grey[200],
+                  child: Container(
+                    //margin: EdgeInsets.only(right: 10, left: 10),
+                    child: Image.network(
 
+                      'https://api.genshin.dev/characters/${_get[index]}/icon',
+                      fit: BoxFit.contain,
                     ),
                   ),
-                );
-              },
+                ),
+                title: Container(
+                  margin: EdgeInsets.all(10),
+                  child: Text(
+                    '${_get[index]}',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (c) => DetailKarakterPage(
+                        karakter: _get[index],
+
+                      ),
+                    ),
+                  );
+                },
+              ),
             );
           }
       )

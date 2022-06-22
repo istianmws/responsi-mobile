@@ -56,8 +56,8 @@ class _ListWeaponPageState extends State<ListWeaponPage> {
                 color: Colors.grey[200],
                 height: 100,
                 width: 100,
-                child: Image.asset(
-                  'logo.png',
+                child: Image.network(
+                  'https://api.genshin.dev/weapons/${_get[index]}/icon',
                   width: 100,
                   fit: BoxFit.cover,
                 ),
